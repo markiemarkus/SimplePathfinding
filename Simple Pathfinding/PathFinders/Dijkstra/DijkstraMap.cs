@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
+namespace SimplePathfinding.PathFinders.Dijkstra
 {
     public class DijkstraMap : BaseDijkstraMap<DijkstraNode>
     {
@@ -12,7 +12,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public DijkstraMap(Int32 width, Int32 height) : base(width, height) { }
+        public DijkstraMap(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -29,9 +29,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnCreateNode"/> for more details.
         /// </summary>
-        protected override DijkstraNode OnCreateNode(Point point, DijkstraNode origin, params Object[] arguments)
+        protected override DijkstraNode OnCreateNode(Point point, DijkstraNode origin, params object[] arguments)
         {
-            Int32 score = arguments != null && arguments.Length > 0 ? (Int32)arguments[0] : 0;
+            int score = arguments != null && arguments.Length > 0 ? (int)arguments[0] : 0;
             return new DijkstraNode(point, origin, score);
         }
 

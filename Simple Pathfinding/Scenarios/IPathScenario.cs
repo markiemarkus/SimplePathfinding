@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
+namespace SimplePathfinding.Scenarios
 {
     public interface IPathScenario
     {
@@ -11,6 +11,6 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// <param name="y">The y.</param>
         /// <param name="diameter">The diameter of object to be checked.</param>
         /// <returns></returns>
-        Boolean IsBlocked(Int32 x, Int32 y, Int32 diameter);
+        bool IsBlocked(int x, int y, int diameter);
     }
 }

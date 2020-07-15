@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
+namespace SimplePathfinding.PathFinders
 {
     public interface IPathfinder
     {
@@ -21,10 +21,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <returns>
         /// If set to <c>True</c> the path was found, otherwise the target point is inaccessible.
         /// </returns>
-        Boolean TryFindPath(Point startPoint, Point endPoint,
+        bool TryFindPath(Point startPoint, Point endPoint,
                             StopFunction stopFunction, 
                             out IReadOnlyCollection<Point> path, 
                             out IReadOnlyCollection<Point> pivotPoints,
-                            Boolean optimize = true);
+                            bool optimize = true);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Common;
+using SimplePathfinding.PathFinders.Common;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.BreadthFirst
+namespace SimplePathfinding.PathFinders.BreadthFirst
 {
     public class BreadthFirstMap : BaseGraphSearchMap<SimpleNode>
     {
@@ -14,7 +14,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.BreadthFirs
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public BreadthFirstMap(Int32 width, Int32 height) : base(width, height)
+        public BreadthFirstMap(int width, int height) : base(width, height)
         {
             queue = new Queue<SimpleNode>();
         }
@@ -38,7 +38,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.BreadthFirs
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnGetCount"/> for more details.
         /// </summary>
-        protected override Int32 OnGetCount()
+        protected override int OnGetCount()
         {
             return queue.Count;
         }

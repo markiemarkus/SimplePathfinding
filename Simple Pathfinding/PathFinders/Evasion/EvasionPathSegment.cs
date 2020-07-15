@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Evasion
+namespace SimplePathfinding.PathFinders.Evasion
 {
     public struct PathSegment
     {

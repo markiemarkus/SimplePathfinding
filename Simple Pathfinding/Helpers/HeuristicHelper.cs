@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
+namespace SimplePathfinding.Helpers
 {
     public class HeuristicHelper
     {
@@ -11,7 +11,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
         /// <param name="start">The start point.</param>
         /// <param name="end">The end point.</param>
         /// <returns></returns>
-        public static Int32 FastEuclideanDistance(Point start, Point end)
+        public static int FastEuclideanDistance(Point start, Point end)
         {
             return (end.X - start.X) * (end.X - start.X) + (end.Y - start.Y) * (end.Y - start.Y);
         }

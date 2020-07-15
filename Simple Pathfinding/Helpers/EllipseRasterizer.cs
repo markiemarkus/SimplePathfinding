@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
+namespace SimplePathfinding.Helpers
 {
     public class EllipseRasterizer
     {
-        private const Double Step = 0.001;
-        private const Double HalfPi = Math.PI / 2.0;
+        private const double Step = 0.001;
+        private const double HalfPi = Math.PI / 2.0;
 
-        protected static IEnumerable<Point> CreateYield(Int32 x, Int32 y)
+        protected static IEnumerable<Point> CreateYield(int x, int y)
         {
             yield return new Point(x, y);
         }
 
-        public static IEnumerable<Point> Enumerate(Int32 centerX, Int32 centerY, Int32 radiusX, Int32 radiusY, Boolean filled = false)
+        public static IEnumerable<Point> Enumerate(int centerX, int centerY, int radiusX, int radiusY, bool filled = false)
         {
             IEnumerable<Point> points = Enumerate(radiusX, radiusY, filled);
             return points.Select(point => new Point(point.X + centerX - radiusX, point.Y + centerY - radiusY));
         }
 
-        public static IEnumerable<Point> Enumerate(Int32 radiusX, Int32 radiusY, Boolean filled = false)
+        public static IEnumerable<Point> Enumerate(int radiusX, int radiusY, bool filled = false)
         {
             // preliminary check - zero point
             if (radiusX == 0 || radiusY == 0) return Enumerable.Empty<Point>();
@@ -45,10 +45,11 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
         /// <summary>
         /// If you wonder why I didn't use some faster algorithm (bresenham, mid-point..) it's because it wouldn't match
         /// the outline of drawn ellipse via Graphics.DrawEllipse. So the obstacle looks elsewhere then the drawn ellipse.
+        /// TODO revisit in a few years.
         /// </summary>
-        private static IEnumerable<Point> EnumerateEllipse(Int32 radiusX, Int32 radiusY, Boolean filled = false)
+        private static IEnumerable<Point> EnumerateEllipse(int radiusX, int radiusY, bool filled = false)
         {
-            Double anomaly = HalfPi;
+            double anomaly = HalfPi;
             Point lastPoint = Point.Empty;
 
             List<Point> result = new List<Point>
@@ -61,11 +62,11 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
 
             while (anomaly >= 0.0)
             {
-                Int32 shiftX = Convert.ToInt32(radiusX*Math.Cos(anomaly));
-                Int32 shiftY = Convert.ToInt32(radiusY*Math.Sin(anomaly));
+                int shiftX = Convert.ToInt32(radiusX*Math.Cos(anomaly));
+                int shiftY = Convert.ToInt32(radiusY*Math.Sin(anomaly));
 
-                Int32 x = radiusX + shiftX;
-                Int32 y = radiusY + shiftY;
+                int x = radiusX + shiftX;
+                int y = radiusY + shiftY;
 
                 if (x != lastPoint.X || y != lastPoint.Y)
                 {

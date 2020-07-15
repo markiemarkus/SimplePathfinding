@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
+namespace SimplePathfinding.PathFinders.Dijkstra
 {
     public class DijkstraPathfinder : BaseGraphSearchPathfinder<DijkstraNode, DijkstraMap>
     {
@@ -13,7 +13,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public DijkstraPathfinder(Int32 width, Int32 height) : base(width, height) { }
+        public DijkstraPathfinder(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// </summary>
         protected override void OnPerformAlgorithm(DijkstraNode currentNode, DijkstraNode neighborNode, Point neighborPoint, Point endPoint, StopFunction stopFunction)
         {
-            Int32 neighborScore = currentNode.Score + NeighborDistance(currentNode.Point, neighborPoint);
+            int neighborScore = currentNode.Score + NeighborDistance(currentNode.Point, neighborPoint);
 
             if (neighborNode == null)
             {

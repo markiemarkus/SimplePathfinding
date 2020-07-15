@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
+namespace SimplePathfinding.PathFinders
 {
     public abstract class BaseGraphSearchPathfinder<TNode, TMap> : BasePathfinder 
         where TNode : BaseGraphSearchNode<TNode>
@@ -22,12 +22,12 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// Gets the width of the area in question.
         /// </summary>
-        public Int32 Width { get; private set; }
+        public int Width { get; private set; }
 
         /// <summary>
         /// Gets the height of the area in question.
         /// </summary>
-        public Int32 Height { get; private set; }
+        public int Height { get; private set; }
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// Determines whether this algorithm supports diagonal directions or not.
         /// </summary>
-        public virtual Boolean AllowDiagonal
+        public virtual bool AllowDiagonal
         {
             get { return true; }
         }
@@ -50,7 +50,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        protected BaseGraphSearchPathfinder(Int32 width, Int32 height)
+        protected BaseGraphSearchPathfinder(int width, int height)
         {
             Width = width;
             Height = height;
@@ -70,12 +70,12 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <param name="end">The neighbor point.</param>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException"></exception>
-        protected static Int32 NeighborDistance(Point start, Point end)
+        protected static int NeighborDistance(Point start, Point end)
         {
-            Int32 result;
-            Int32 deltaX = end.X - start.X;
-            Int32 deltaY = end.Y - start.Y;
-            Int32 distance = (deltaX < 0 ? -deltaX : deltaX) + (deltaY < 0 ? -deltaY : deltaY);
+            int result;
+            int deltaX = end.X - start.X;
+            int deltaY = end.Y - start.Y;
+            int distance = (deltaX < 0 ? -deltaX : deltaX) + (deltaY < 0 ? -deltaY : deltaY);
 
             switch (distance)
             {
@@ -153,14 +153,14 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// See <see cref="BasePathfinder.OnTryFindPath"/> for more details.
         /// </summary>
-        protected override Boolean OnTryFindPath(Point startPoint, Point endPoint,
+        protected override bool OnTryFindPath(Point startPoint, Point endPoint,
                                                  StopFunction stopFunction,
                                                  out IReadOnlyCollection<Point> path,
                                                  out IReadOnlyCollection<Point> pivotPoints,
-                                                 Boolean optimize = true)
+                                                 bool optimize = true)
         {
             // prepares main parameters
-            Boolean result = false;
+            bool result = false;
             pivotPoints = null;
             path = null;
 
@@ -196,7 +196,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
 
                     // determines the node if possible, whether it is closed, and calculates its score
                     TNode neighborNode = Map[neighborPoint.X, neighborPoint.Y];
-                    Boolean inClosedSet = neighborNode != null && neighborNode.IsClosed;
+                    bool inClosedSet = neighborNode != null && neighborNode.IsClosed;
 
                     // if this node was already processed, skip it
                     if (inClosedSet) continue;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
+namespace SimplePathfinding.Helpers
 {
     public class DirectionHelper
     {
@@ -25,15 +25,15 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
             return result;
         }
 
-        public static Point GetNextStep(Point startPoint, DirectionType direction, Int32 steps = 1)
+        public static Point GetNextStep(Point startPoint, DirectionType direction, int steps = 1)
         {
             Point nextPoint = GetNextStep(direction, steps);
             return new Point(startPoint.X + nextPoint.X, startPoint.Y + nextPoint.Y);
         }
 
-        public static Point GetNextStep(DirectionType direction, Int32 steps = 1)
+        public static Point GetNextStep(DirectionType direction, int steps = 1)
         {
-            Int32 x = 0, y = 0;
+            int x = 0, y = 0;
 
             if (direction.HasFlag(DirectionType.West)) x = -steps;
             if (direction.HasFlag(DirectionType.East)) x = +steps;
@@ -43,12 +43,12 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
             return new Point(x, y);
         }
 
-        public static DirectionType Rotate(DirectionType direction, Boolean leftSide, Boolean allowDiagonals)
+        public static DirectionType Rotate(DirectionType direction, bool leftSide, bool allowDiagonals)
         {
             return leftSide ? RotateLeft(direction, allowDiagonals) : RotateRight(direction, allowDiagonals);
         }
 
-        public static DirectionType RotateLeft(DirectionType direction, Boolean allowDiagonals = true)
+        public static DirectionType RotateLeft(DirectionType direction, bool allowDiagonals = true)
         {
             DirectionType result = DirectionType.None;
 
@@ -84,7 +84,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
             return result;
         }
 
-        public static DirectionType RotateRight(DirectionType direction, Boolean allowDiagonals = true)
+        public static DirectionType RotateRight(DirectionType direction, bool allowDiagonals = true)
         {
             DirectionType result = DirectionType.None;
 
@@ -122,13 +122,13 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
 
         public static DirectionType InfereDirection(Point previousPoint, Point nextPoint)
         {
-            Int32 deltaX = nextPoint.X - previousPoint.X;
-            Int32 deltaY = nextPoint.Y - previousPoint.Y;
+            int deltaX = nextPoint.X - previousPoint.X;
+            int deltaY = nextPoint.Y - previousPoint.Y;
 
             return InfereDirection(deltaX, deltaY);
         }
 
-        public static DirectionType InfereDirection(Int32 deltaX, Int32 deltaY)
+        public static DirectionType InfereDirection(int deltaX, int deltaY)
         {
             DirectionType result = DirectionType.None;
 
@@ -159,7 +159,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
             return result;
         }
 
-        public static IEnumerable<DirectionType> GetValues(Boolean allowDiagonals = true)
+        public static IEnumerable<DirectionType> GetValues(bool allowDiagonals = true)
         {
             yield return DirectionType.North;
             if (allowDiagonals) yield return DirectionType.NorthEast;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra;
+using SimplePathfinding.Helpers;
+using SimplePathfinding.PathFinders.Dijkstra;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
+namespace SimplePathfinding.PathFinders.AStar
 {
     public class AStarMap : BaseDijkstraMap<AStarNode>
     {
@@ -14,7 +14,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public AStarMap(Int32 width, Int32 height) : base(width, height) { }
+        public AStarMap(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -31,10 +31,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnCreateNode"/> for more details.
         /// </summary>
-        protected override AStarNode OnCreateNode(Point point, AStarNode origin, params Object[] arguments)
+        protected override AStarNode OnCreateNode(Point point, AStarNode origin, params object[] arguments)
         {
-            Int32 score = arguments != null && arguments.Length > 0 ? (Int32)arguments[0] : 0;
-            Int32 estimatedScore = arguments != null && arguments.Length > 1 ? (Int32) arguments[1] : 0;
+            int score = arguments != null && arguments.Length > 0 ? (int)arguments[0] : 0;
+            int estimatedScore = arguments != null && arguments.Length > 1 ? (int) arguments[1] : 0;
             return new AStarNode(point, origin, score, estimatedScore);
         }
 

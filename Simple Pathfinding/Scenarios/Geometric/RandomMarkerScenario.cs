@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
+namespace SimplePathfinding.Scenarios.Geometric
 {
     public class RandomMarkerScenario : RandomRectangleScenario
     {
@@ -11,7 +11,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BasePathScenario.UseCache"/> for more details.
         /// </summary>
-        protected override Boolean UseCache
+        protected override bool UseCache
         {
             get { return true; }
         }
@@ -25,7 +25,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public RandomMarkerScenario(Int32 width, Int32 height) : base(width, height) { }
+        public RandomMarkerScenario(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -37,12 +37,12 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         protected override void OnConstructLayout(out IEnumerable<Rectangle> geometry)
         {
             List<Rectangle> result = new List<Rectangle>();
-            Int32 shift = AreHollowAreasMinimized ? 0 : 1;
+            int shift = AreHollowAreasMinimized ? 0 : 1;
 
-            for (Int32 index = 0; index < 5000; index++)
+            for (int index = 0; index < 5000; index++)
             {
-                Int32 x = Random.Next(Width - 100) + 50;
-                Int32 y = Random.Next(Height - 100) + 50;
+                int x = Random.Next(Width - 100) + 50;
+                int y = Random.Next(Height - 100) + 50;
 
                 Rectangle rectangle = new Rectangle(x - 2, y - 2, 5 - shift, 5 - shift);
                 result.Add(rectangle);
@@ -62,7 +62,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// We have faster variant, because we've cached the map.
         /// </summary>
-        protected override Boolean OnIsBlocked(Int32 x, Int32 y)
+        protected override bool OnIsBlocked(int x, int y)
         {
             return GetCacheBit(x, y);
         }

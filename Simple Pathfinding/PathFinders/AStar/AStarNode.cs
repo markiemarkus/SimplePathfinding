@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
+namespace SimplePathfinding.PathFinders.AStar
 {
     public class AStarNode : BaseGraphSearchNode<AStarNode>, IComparable<AStarNode>
     {
@@ -10,12 +10,12 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// <summary>
         /// Gets the actual score (distance to a finish).
         /// </summary>
-        public Int32 Score { get; private set; }
+        public int Score { get; private set; }
 
         /// <summary>
         /// Gets or sets the estimated score.
         /// </summary>
-        public Int32 EstimatedScore { get; set; }
+        public int EstimatedScore { get; set; }
 
         #endregion
 
@@ -28,7 +28,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// <param name="origin">The origin.</param>
         /// <param name="score">The score.</param>
         /// <param name="estimatedScore">The estimated score.</param>
-        public AStarNode(Point point, AStarNode origin = null, Int32 score = 0, Int32 estimatedScore = 0) : base(point, origin)
+        public AStarNode(Point point, AStarNode origin = null, int score = 0, int estimatedScore = 0) : base(point, origin)
         {
             Score = score;
             EstimatedScore = estimatedScore;
@@ -41,7 +41,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// <summary>
         /// Updates the parameters on the fly.
         /// </summary>
-        public void Update(Int32 score, Int32 estimatedScore, AStarNode origin)
+        public void Update(int score, int estimatedScore, AStarNode origin)
         {
             Score = score;
             EstimatedScore = estimatedScore;
@@ -55,7 +55,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// <summary>
         /// See <see cref="IComparable{T}.CompareTo"/> for more details.
         /// </summary>
-        public Int32 CompareTo(AStarNode other)
+        public int CompareTo(AStarNode other)
         {
             return EstimatedScore.CompareTo(other.EstimatedScore);
         }
@@ -65,10 +65,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         #region << Object >>
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Returns a <see cref="string" /> that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        /// A <see cref="string" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {

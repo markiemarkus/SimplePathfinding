@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Common;
+using SimplePathfinding.PathFinders.Common;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.DepthFirst
+namespace SimplePathfinding.PathFinders.DepthFirst
 {
     public class DepthFirstMap : BaseGraphSearchMap<SimpleNode>
     {
@@ -14,7 +14,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.DepthFirst
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public DepthFirstMap(Int32 width, Int32 height) : base(width, height)
+        public DepthFirstMap(int width, int height) : base(width, height)
         {
             queue = new Stack<SimpleNode>();
         }
@@ -38,7 +38,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.DepthFirst
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnGetCount"/> for more details.
         /// </summary>
-        protected override Int32 OnGetCount()
+        protected override int OnGetCount()
         {
             return queue.Count;
         }

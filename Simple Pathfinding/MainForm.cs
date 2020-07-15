@@ -6,28 +6,28 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.BestFirst;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.BreadthFirst;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.DepthFirst;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Evasion;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint;
-using YinYang.CodeProject.Projects.SimplePathfinding.Properties;
-using YinYang.CodeProject.Projects.SimplePathfinding.Scenarios;
-using YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric;
-using YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Specialized;
+using SimplePathfinding.Helpers;
+using SimplePathfinding.PathFinders;
+using SimplePathfinding.PathFinders.AStar;
+using SimplePathfinding.PathFinders.BestFirst;
+using SimplePathfinding.PathFinders.BreadthFirst;
+using SimplePathfinding.PathFinders.DepthFirst;
+using SimplePathfinding.PathFinders.Dijkstra;
+using SimplePathfinding.PathFinders.Evasion;
+using SimplePathfinding.PathFinders.JumpPoint;
+using SimplePathfinding.Properties;
+using SimplePathfinding.Scenarios;
+using SimplePathfinding.Scenarios.Geometric;
+using SimplePathfinding.Scenarios.Specialized;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding
+namespace SimplePathfinding
 {
     public partial class MainForm : Form
     {
         #region | Constant |
 
-        private const Int32 DefaultAreaWidth = 512; // 374
-        private const Int32 DefaultAreaHeight = 512; // 390
+        private const int DefaultAreaWidth = 512; // 374
+        private const int DefaultAreaHeight = 512; // 390
 
         #endregion
 
@@ -35,17 +35,17 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding
 
         private readonly Action processTasks;
         private readonly Action<Image> updateImage;
-        private readonly Action<String> updateCaption;
-        private readonly Func<CheckBox, Boolean> getOption;
+        private readonly Action<string> updateCaption;
+        private readonly Func<CheckBox, bool> getOption;
         private readonly Func<Point, Point> getFormPosition;
 
         private Thread thread;
         private Bitmap image;
         private Graphics graphics;
         private Bitmap defaultImage;
-        private Int32 objectDiameter;
-        private Boolean needsUpdate;
-        private Boolean turnOnEvents;
+        private int objectDiameter;
+        private bool needsUpdate;
+        private bool turnOnEvents;
         private Graphics imageGraphics;
         private BlockMethodType methodType;
 
@@ -116,7 +116,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding
 
                     // performs path finding with a given path finder
                     TimeSpan pathFindTime;
-                    Int32 pointCount = DrawPath(image, imageGraphics, position, cursor, out pathFindTime);
+                    int pointCount = DrawPath(image, imageGraphics, position, cursor, out pathFindTime);
 
                     // draws the markers
                     DrawMarker(imageGraphics, position, Brushes.WhiteSmoke, true);
@@ -155,7 +155,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding
             });
         }
 
-        private void RecreateDefaultImage(Boolean generateNew = true, Boolean updateDistanceMap = true)
+        private void RecreateDefaultImage(bool generateNew = true, bool updateDistanceMap = true)
         {
             Text = Resources.MainForm_RecreateScenario_WaitCaption;
 
@@ -163,15 +163,15 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding
             DisposeDefaultImage();
 
             // creates new default image for this scenario
-            Boolean minimizeHollowAreas = (Boolean) Invoke(getOption, checkMinimizeHollowAreas);
-            Boolean showDistanceMap = (Boolean) Invoke(getOption, checkShowDistanceMap);
+            bool minimizeHollowAreas = (bool) Invoke(getOption, checkMinimizeHollowAreas);
+            bool showDistanceMap = (bool) Invoke(getOption, checkShowDistanceMap);
 
             defaultImage = activeScenario.CreateDefaultImage(methodType, generateNew, minimizeHollowAreas, updateDistanceMap, showDistanceMap);
         }
 
-        public static void DrawMarker(Graphics graphics, Point point, Brush color, Boolean frame = false, Boolean filled = true)
+        public static void DrawMarker(Graphics graphics, Point point, Brush color, bool frame = false, bool filled = true)
         {
-            Int32 shift = filled ? 0 : 1;
+            int shift = filled ? 0 : 1;
             Rectangle rectangle = new Rectangle(point.X - 2, point.Y - 2, 5 - shift, 5 - shift);
 
             if (filled)
@@ -220,27 +220,27 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding
 
         #region | Common |
 
-        protected Int32 DrawPath(Bitmap image, Graphics graphics, Point start, Point end, out TimeSpan time)
+        protected int DrawPath(Bitmap image, Graphics graphics, Point start, Point end, out TimeSpan time)
         {
             // performs boundary check first
             BasePathScenario.CheckBounds(ref start, ref end, DefaultAreaWidth, DefaultAreaHeight);
 
             // determines the options
-            Boolean flagPerformOptimizations = (Boolean) Invoke(getOption, checkPerformOptimization);
-            Boolean flagDrawPivotPoints = (Boolean) Invoke(getOption, checkDrawPivotPoints);
-            Boolean flagDrawLargerPivots = (Boolean) Invoke(getOption, checkDrawLargerPivots);
+            bool flagPerformOptimizations = (bool) Invoke(getOption, checkPerformOptimization);
+            bool flagDrawPivotPoints = (bool) Invoke(getOption, checkDrawPivotPoints);
+            bool flagDrawLargerPivots = (bool) Invoke(getOption, checkDrawLargerPivots);
 
             // initializes the parameters
-            Int32 result = 0;
+            int result = 0;
             IReadOnlyCollection<Point> points;
             IReadOnlyCollection<Point> pivotPoints;
 
             // finds the path while measuring time elapsed
             DateTime startDate = DateTime.Now;
-            Single precisionAlignment = objectDiameter%2 == 0 ? 0.5f : 0.0f;
+            float precisionAlignment = objectDiameter%2 == 0 ? 0.5f : 0.0f;
             Pen pen = new Pen(Color.DarkGreen) { Width = objectDiameter - precisionAlignment, StartCap = LineCap.Round, EndCap = LineCap.Round, LineJoin = LineJoin.Round };
 
-            Boolean found = activePathFinder.TryFindPath(start, end, stopFunction, out points, out pivotPoints, flagPerformOptimizations);
+            bool found = activePathFinder.TryFindPath(start, end, stopFunction, out points, out pivotPoints, flagPerformOptimizations);
             time = DateTime.Now - startDate;
 
             if (found)
@@ -416,7 +416,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding
         private void ListBlockKeyPress(object sender, KeyPressEventArgs e)
         {
             // disables switching on fast keys
-            switch (Char.ToUpper(e.KeyChar))
+            switch (char.ToUpper(e.KeyChar))
             {
                 case 'O': case 'P': case 'H': case 'L':
                 case 'Q': case 'W': case 'F': case 'R':

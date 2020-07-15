@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
+namespace SimplePathfinding.Scenarios.Geometric
 {
     public class RandomRectangleScenario : BaseGeometryScenario<Rectangle>
     {
@@ -14,7 +14,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public RandomRectangleScenario(Int32 width, Int32 height) : base(width, height) { }
+        public RandomRectangleScenario(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -25,11 +25,11 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
             // set bits to each point inside the rectangle
             if (AreHollowAreasMinimized)
             {
-                Int32 offset = GetOffset(rectangle.Left, rectangle.Top);
+                int offset = GetOffset(rectangle.Left, rectangle.Top);
 
-                for (Int32 y = 0; y < rectangle.Height; y++)
+                for (int y = 0; y < rectangle.Height; y++)
                 {
-                    for (Int32 x = 0; x < rectangle.Width; x++)
+                    for (int x = 0; x < rectangle.Width; x++)
                     {
                         Cache.Set(offset + x, true);
                     }
@@ -58,12 +58,12 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         {
             List<Rectangle> result = new List<Rectangle>();
 
-            for (Int32 index = 0; index < 6; index++)
+            for (int index = 0; index < 6; index++)
             {
-                Int32 x1 = Random.Next(Width - 100) + 50;
-                Int32 y1 = Random.Next(Height - 100) + 50;
-                Int32 x2 = Random.Next(Width - 100) + 50;
-                Int32 y2 = Random.Next(Height - 100) + 50;
+                int x1 = Random.Next(Width - 100) + 50;
+                int y1 = Random.Next(Height - 100) + 50;
+                int x2 = Random.Next(Width - 100) + 50;
+                int y2 = Random.Next(Height - 100) + 50;
 
                 Rectangle rectangle = new Rectangle(Math.Min(x1, x2), Math.Min(y1, y2), Math.Abs(x2 - x1), Math.Abs(y2 - y1));
                 result.Add(rectangle);
@@ -88,9 +88,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
             }
         }
 
-        protected override Boolean OnCanGeometryBlock(Int32 x, Int32 y, Rectangle geometry)
+        protected override bool OnCanGeometryBlock(int x, int y, Rectangle geometry)
         {
-            Boolean result;
+            bool result;
 
             // empty rectangle
             if (geometry.Width == 0 && geometry.Height == 0)
@@ -105,9 +105,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
             return result;
         }
 
-        protected override Boolean OnIsGeometryBlocking(Int32 x, Int32 y, Rectangle ellipse)
+        protected override bool OnIsGeometryBlocking(int x, int y, Rectangle ellipse)
         {
-            Boolean result;
+            bool result;
 
             if (ellipse.Width == 1 && ellipse.Height == 1) // point
             {

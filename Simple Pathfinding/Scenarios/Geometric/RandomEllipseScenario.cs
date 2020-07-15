@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
+namespace SimplePathfinding.Scenarios.Geometric
 {
     public class RandomEllipseScenario : RandomRectangleScenario
     {
@@ -12,7 +12,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BasePathScenario.UseCache"/> for more details.
         /// </summary>
-        protected override Boolean UseCache
+        protected override bool UseCache
         {
             get { return ObstacleDetectionMethod == BlockMethodType.Precise; }
         }
@@ -26,7 +26,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public RandomEllipseScenario(Int32 width, Int32 height) : base(width, height) { }
+        public RandomEllipseScenario(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -34,11 +34,11 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
 
         protected void AddEllipseToCache(Rectangle ellipse)
         {
-            Int32 radiusX = ellipse.Width >> 1;
-            Int32 radiusY = ellipse.Height >> 1;
+            int radiusX = ellipse.Width >> 1;
+            int radiusY = ellipse.Height >> 1;
 
-            Int32 centerX = ellipse.Left + radiusX;
-            Int32 centerY = ellipse.Top + radiusY;
+            int centerX = ellipse.Left + radiusX;
+            int centerY = ellipse.Top + radiusY;
 
             foreach (Point point in EllipseRasterizer.Enumerate(centerX, centerY, radiusX - 1, radiusY - 1, AreHollowAreasMinimized).ToList())
             {
@@ -80,7 +80,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BaseGeometryScenario{TGeometry}.OnIsGeometryBlocking"/> for more details.
         /// </summary>
-        protected override Boolean OnIsGeometryBlocking(Int32 x, Int32 y, Rectangle ellipse)
+        protected override bool OnIsGeometryBlocking(int x, int y, Rectangle ellipse)
         {
             return ObstacleDetectionMethod == BlockMethodType.Precise ? GetCacheBit(x, y) : base.OnCanGeometryBlock(x, y, ellipse);
         }
@@ -88,7 +88,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BaseGeometryScenario{TGeometry}.OnCanGeometryBlock"/> for more details.
         /// </summary>
-        protected override Boolean OnCanGeometryBlock(Int32 x, Int32 y, Rectangle ellipse)
+        protected override bool OnCanGeometryBlock(int x, int y, Rectangle ellipse)
         {
             return ellipse.Contains(x, y);
         }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
+namespace SimplePathfinding.PathFinders
 {
     public abstract class BaseGraphSearchNode<TNode> where TNode : BaseGraphSearchNode<TNode>
     {
@@ -20,7 +20,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// Determiens whether the node was already processed (true) or not.
         /// </summary>
-        public Boolean IsClosed { get; private set; }
+        public bool IsClosed { get; private set; }
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <returns>
         /// true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
         /// </returns>
-        public Boolean Equals(TNode other)
+        public bool Equals(TNode other)
         {
             return Point == other.Point;
         }
@@ -71,10 +71,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         #region << Object >>
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Returns a <see cref="string" /> that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        /// A <see cref="string" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {

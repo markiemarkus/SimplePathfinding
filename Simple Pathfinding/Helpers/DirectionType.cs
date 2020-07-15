@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
+namespace SimplePathfinding.Helpers
 {
     /// <summary>
     /// Direction

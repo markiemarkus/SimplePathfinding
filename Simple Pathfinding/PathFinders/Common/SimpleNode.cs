@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Common
+namespace SimplePathfinding.PathFinders.Common
 {
     public class SimpleNode : BaseGraphSearchNode<SimpleNode>
     {

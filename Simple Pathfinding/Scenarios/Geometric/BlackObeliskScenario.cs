@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
+namespace SimplePathfinding.Scenarios.Geometric
 {
     public class BlackObeliskScenario : RandomRectangleScenario
     {
@@ -22,9 +22,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public BlackObeliskScenario(Int32 width, Int32 height) : base(width, height)
+        public BlackObeliskScenario(int width, int height) : base(width, height)
         {
-            Int32 width4 = Width >> 2;
+            int width4 = Width >> 2;
             blackObelisk = new Rectangle(width4 + (Width >> 3), Height >> 2, width4, Height >> 1);
         }
 

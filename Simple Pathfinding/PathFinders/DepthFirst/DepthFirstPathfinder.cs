@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Common;
+using SimplePathfinding.Helpers;
+using SimplePathfinding.PathFinders.Common;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.DepthFirst
+namespace SimplePathfinding.PathFinders.DepthFirst
 {
     public class DepthFirstPathfinder : BaseGraphSearchPathfinder<SimpleNode, DepthFirstMap>
     {
         #region | Constructors |
 
-        public DepthFirstPathfinder(Int32 width, Int32 height) : base(width, height) { }
+        public DepthFirstPathfinder(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -18,7 +18,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.DepthFirst
         /// <summary>
         /// See <see cref="BaseGraphSearchPathfinder{TNode,TMap}.AllowDiagonal"/> for more details.
         /// </summary>
-        public override Boolean AllowDiagonal
+        public override bool AllowDiagonal
         {
             get { return true; }
         }

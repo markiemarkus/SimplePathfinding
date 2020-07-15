@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
+namespace SimplePathfinding.PathFinders.Dijkstra
 {
     public class DijkstraNode : BaseGraphSearchNode<DijkstraNode>, IComparable<DijkstraNode>
     {
@@ -10,7 +10,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// <summary>
         /// Gets the actual score (distance to a finish).
         /// </summary>
-        public Int32 Score { get; private set; }
+        public int Score { get; private set; }
 
         #endregion
 
@@ -22,7 +22,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// <param name="point">The point.</param>
         /// <param name="origin">The origin.</param>
         /// <param name="score">The score.</param>
-        public DijkstraNode(Point point, DijkstraNode origin = null, Int32 score = 0) : base(point, origin)
+        public DijkstraNode(Point point, DijkstraNode origin = null, int score = 0) : base(point, origin)
         {
             Score = score;
         }
@@ -36,7 +36,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// </summary>
         /// <param name="score">The score.</param>
         /// <param name="parent">The parent.</param>
-        public void Update(Int32 score, DijkstraNode parent)
+        public void Update(int score, DijkstraNode parent)
         {
             Score = score;
             Origin = parent;
@@ -47,10 +47,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         #region << Object >>
 
         /// <summary>
-        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// Returns a <see cref="string" /> that represents this instance.
         /// </summary>
         /// <returns>
-        /// A <see cref="System.String" /> that represents this instance.
+        /// A <see cref="string" /> that represents this instance.
         /// </returns>
         public override string ToString()
         {
@@ -64,7 +64,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// <summary>
         /// See <see cref="IComparable{T}.CompareTo"/> for more details.
         /// </summary>
-        public Int32 CompareTo(DijkstraNode other)
+        public int CompareTo(DijkstraNode other)
         {
             return Score.CompareTo(other.Score);
         }

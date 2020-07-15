@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
+namespace SimplePathfinding.Scenarios.Geometric
 {
     public abstract class BaseGeometryScenario<TGeometry> : BasePathScenario
     {
@@ -22,7 +22,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        protected BaseGeometryScenario(Int32 width, Int32 height) : base(width, height)
+        protected BaseGeometryScenario(int width, int height) : base(width, height)
         {
             Random = new Random();
             layout = new List<TGeometry>();
@@ -58,7 +58,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <param name="y">The y.</param>
         /// <param name="geometry">The instance of geomtric shape.</param>
         /// <returns></returns>
-        protected abstract Boolean OnCanGeometryBlock(Int32 x, Int32 y, TGeometry geometry);
+        protected abstract bool OnCanGeometryBlock(int x, int y, TGeometry geometry);
 
         /// <summary>
         /// Investigates whether the obstacles is actually present on the given point.
@@ -67,7 +67,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <param name="y">The y.</param>
         /// <param name="geometry">The instance of geomtric shape.</param>
         /// <returns></returns>
-        protected abstract Boolean OnIsGeometryBlocking(Int32 x, Int32 y, TGeometry geometry);
+        protected abstract bool OnIsGeometryBlocking(int x, int y, TGeometry geometry);
 
         #endregion
 
@@ -76,7 +76,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BasePathScenario.OnBuild"/> for more details.
         /// </summary>
-        protected override void OnBuild(Boolean generateNew)
+        protected override void OnBuild(bool generateNew)
         {
             if (generateNew)
             {
@@ -107,7 +107,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BasePathScenario.OnIsBlocked"/> for more details.
         /// </summary>
-        protected override Boolean OnIsBlocked(Int32 x, Int32 y)
+        protected override bool OnIsBlocked(int x, int y)
         {
             // determines whether any geometric entity that can block (OnCanGeomtryBlock), is actually blocking at this point (OnIsGeometryBlock)
             return layout.

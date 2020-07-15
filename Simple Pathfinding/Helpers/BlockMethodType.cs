@@ -1,4 +1,4 @@
-﻿namespace YinYang.CodeProject.Projects.SimplePathfinding.Helpers
+﻿namespace SimplePathfinding.Helpers
 {
     public enum BlockMethodType
     {

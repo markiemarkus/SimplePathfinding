@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
+namespace SimplePathfinding.Scenarios.Geometric
 {
     public class RandomLineScenario : RandomRectangleScenario
     {
-        private const Single LineWidth = 5.0f;
-        private const Single LineHalfWidth = LineWidth/2.0f;
+        private const float LineWidth = 5.0f;
+        private const float LineHalfWidth = LineWidth/2.0f;
 
         #region | Constructors |
 
@@ -18,7 +18,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public RandomLineScenario(Int32 width, Int32 height) : base(width, height) { }
+        public RandomLineScenario(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -36,33 +36,33 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BaseGeometryScenario{TGeometry}.OnIsGeometryBlocking"/> for more details.
         /// </summary>
-        protected override Boolean OnIsGeometryBlocking(Int32 x, Int32 y, Rectangle line)
+        protected override bool OnIsGeometryBlocking(int x, int y, Rectangle line)
         {
-            Boolean result;
+            bool result;
 
             if (ObstacleDetectionMethod == BlockMethodType.Precise)
             {
-                Int32 deltaX = line.Right - line.Left;
-                Int32 deltaY = line.Bottom - line.Top;
+                int deltaX = line.Right - line.Left;
+                int deltaY = line.Bottom - line.Top;
 
                 // determines normalized shift
-                Double shiftX = -deltaY/Math.Sqrt(deltaY*deltaY + deltaX*deltaX);
-                Double shiftY = deltaX/Math.Sqrt(deltaY*deltaY + deltaX*deltaX);
+                double shiftX = -deltaY/Math.Sqrt(deltaY*deltaY + deltaX*deltaX);
+                double shiftY = deltaX/Math.Sqrt(deltaY*deltaY + deltaX*deltaX);
 
                 // left side line
-                Int32 leftAx = (Int32) Math.Round(-LineHalfWidth*shiftX + line.Left);
-                Int32 leftAy = (Int32) Math.Round(-LineHalfWidth*shiftY + line.Top);
-                Int32 leftBx = (Int32) Math.Round(-LineHalfWidth*shiftX + line.Right);
-                Int32 leftBy = (Int32) Math.Round(-LineHalfWidth*shiftY + line.Bottom);
+                int leftAx = (int) Math.Round(-LineHalfWidth*shiftX + line.Left);
+                int leftAy = (int) Math.Round(-LineHalfWidth*shiftY + line.Top);
+                int leftBx = (int) Math.Round(-LineHalfWidth*shiftX + line.Right);
+                int leftBy = (int) Math.Round(-LineHalfWidth*shiftY + line.Bottom);
 
                 Point leftA = new Point(leftAx, leftAy);
                 Point leftB = new Point(leftBx, leftBy);
 
                 // right side line
-                Int32 rightAx = (Int32) Math.Round(LineHalfWidth*shiftX + line.Left);
-                Int32 rightAy = (Int32) Math.Round(LineHalfWidth*shiftY + line.Top);
-                Int32 rightBx = (Int32) Math.Round(LineHalfWidth*shiftX + line.Right);
-                Int32 rightBy = (Int32) Math.Round(LineHalfWidth*shiftY + line.Bottom);
+                int rightAx = (int) Math.Round(LineHalfWidth*shiftX + line.Left);
+                int rightAy = (int) Math.Round(LineHalfWidth*shiftY + line.Top);
+                int rightBx = (int) Math.Round(LineHalfWidth*shiftX + line.Right);
+                int rightBy = (int) Math.Round(LineHalfWidth*shiftY + line.Bottom);
 
                 Point rightA = new Point(rightAx, rightAy);
                 Point rightB = new Point(rightBx, rightBy);
@@ -71,7 +71,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
 
                 result = false;
 
-                for (Int32 index = 0, last = 3; index < 4; last = index++) 
+                for (int index = 0, last = 3; index < 4; last = index++) 
                 {
                     if (((points[index].Y > y) != (points[last].Y > y)) && (x < (points[last].X - points[index].X)*(y - points[index].Y)/(points[last].Y - points[index].Y) + points[index].X))
                     {
@@ -90,7 +90,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Geometric
         /// <summary>
         /// See <see cref="BaseGeometryScenario{TGeometry}.OnCanGeometryBlock"/> for more details.
         /// </summary>
-        protected override Boolean OnCanGeometryBlock(Int32 x, Int32 y, Rectangle line)
+        protected override bool OnCanGeometryBlock(int x, int y, Rectangle line)
         {
             return line.Contains(x, y);
         }

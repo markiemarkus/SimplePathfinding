@@ -1,7 +1,7 @@
 ﻿using System;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
+namespace SimplePathfinding.PathFinders.Dijkstra
 {
     public abstract class BaseDijkstraMap<TNode> : BaseGraphSearchMap<TNode> where TNode : BaseGraphSearchNode<TNode>, IComparable<TNode>
     {
@@ -18,7 +18,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        protected BaseDijkstraMap(Int32 width, Int32 height) : base(width, height)
+        protected BaseDijkstraMap(int width, int height) : base(width, height)
         {
             priorityQueue = new PriorityQueue<TNode>();
         }
@@ -30,7 +30,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Dijkstra
         /// <summary>
         /// See <see cref="BaseGraphSearchMap{TNode}.OnGetCount"/> for more details.
         /// </summary>
-        protected override Int32 OnGetCount()
+        protected override int OnGetCount()
         {
             return priorityQueue.Count;
         }

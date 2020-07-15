@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding
+namespace SimplePathfinding
 {
     static class Program
     {

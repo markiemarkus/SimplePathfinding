@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
+using SimplePathfinding.PathFinders.AStar;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
+namespace SimplePathfinding.PathFinders
 {
     public abstract class BaseGraphSearchMap<TNode> where TNode : BaseGraphSearchNode<TNode>
     {
         #region | Fields |
 
-        private readonly Int32 width;
-        private readonly Int32 height;
+        private readonly int width;
+        private readonly int height;
 
         private TNode[] nodes;
-        private Int32[] fastY;
+        private int[] fastY;
 
         #endregion
 
@@ -21,7 +21,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// Gets the open nodes count.
         /// </summary>
-        public Int32 OpenCount
+        public int OpenCount
         {
             get { return OnGetCount(); }
         }
@@ -33,7 +33,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// Gets the <see cref="AStarNode"/> on a given coordinates.
         /// </summary>
-        public TNode this[Int32 x, Int32 y]
+        public TNode this[int x, int y]
         {
             get { return nodes[x + fastY[y]]; }
         }
@@ -47,7 +47,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        protected BaseGraphSearchMap(Int32 width, Int32 height)
+        protected BaseGraphSearchMap(int width, int height)
         {
             this.width = width;
             this.height = height;
@@ -61,9 +61,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
 
         private void Precalculate()
         {
-            fastY = new Int32[height];
+            fastY = new int[height];
 
-            for (Int32 y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
                 fastY[y] = y * width;
             }
@@ -80,9 +80,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         #region | Virtual/abstract methods |
 
         protected abstract TNode OnCreateFirstNode(Point startPoint, Point endPoint);
-        protected abstract TNode OnCreateNode(Point point, TNode origin, params Object[] arguments);
+        protected abstract TNode OnCreateNode(Point point, TNode origin, params object[] arguments);
 
-        protected abstract Int32 OnGetCount();
+        protected abstract int OnGetCount();
         protected abstract void OnAddNewNode(TNode result);
         protected abstract TNode OnGetTopNode();
         protected abstract void OnClear();
@@ -94,7 +94,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// Creates new open node on a map at given coordinates and parameters.
         /// </summary>
-        public void OpenNode(Point point, TNode origin, params Object[] arguments)
+        public void OpenNode(Point point, TNode origin, params object[] arguments)
         {
             TNode result = OnCreateNode(point, origin, arguments);
             OpenNodeInternal(point, result);

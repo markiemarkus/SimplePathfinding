@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar;
+using SimplePathfinding.Helpers;
+using SimplePathfinding.PathFinders.AStar;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint
+namespace SimplePathfinding.PathFinders.JumpPoint
 {
     public class JumpPointPathfinder : AStarPathfinder
     {
@@ -13,7 +13,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public JumpPointPathfinder(Int32 width, Int32 height) : base(width, height) { }
+        public JumpPointPathfinder(int width, int height) : base(width, height) { }
 
         /// <summary>
         /// See <see cref="BaseGraphSearchPathfinder{TNode,TMap}.OnEnumerateNeighbors"/> for more details.
@@ -24,14 +24,14 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint
 
             if (currentNode.Origin != null)
             {
-                Int32 x = currentNode.Point.X;
-                Int32 y = currentNode.Point.Y;
-                Int32 px = currentNode.Origin.Point.X;
-                Int32 py = currentNode.Origin.Point.Y;
+                int x = currentNode.Point.X;
+                int y = currentNode.Point.Y;
+                int px = currentNode.Origin.Point.X;
+                int py = currentNode.Origin.Point.Y;
 
                 // get the normalized direction of travel
-                Int32 deltaX = (x - px)/Math.Max(Math.Abs(x - px), 1);
-                Int32 deltaY = (y - py)/Math.Max(Math.Abs(y - py), 1);
+                int deltaX = (x - px)/Math.Max(Math.Abs(x - px), 1);
+                int deltaY = (y - py)/Math.Max(Math.Abs(y - py), 1);
 
                 // search diagonally
                 if (deltaX != 0 && deltaY != 0)
@@ -117,8 +117,8 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint
             {
                 AStarNode jumpNode = Map[jumpPoint.X, jumpPoint.Y];
 
-                Int32 distance = HeuristicHelper.FastEuclideanDistance(currentNode.Point, jumpPoint);
-                Int32 jumpScore = currentNode.Score + distance;
+                int distance = HeuristicHelper.FastEuclideanDistance(currentNode.Point, jumpPoint);
+                int jumpScore = currentNode.Score + distance;
 
                 if (jumpNode == null)
                 {
@@ -133,13 +133,13 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint
             }
         }
 
-        private static Boolean TryJump(Point sourcePoint, Point targetPoint, Point endPoint, StopFunction stopFunction, out Point jumpPoint)
+        private static bool TryJump(Point sourcePoint, Point targetPoint, Point endPoint, StopFunction stopFunction, out Point jumpPoint)
         {
-            Int32 x = sourcePoint.X;
-            Int32 y = sourcePoint.Y;
+            int x = sourcePoint.X;
+            int y = sourcePoint.Y;
 
-            Int32 deltaX = x - targetPoint.X;
-            Int32 deltaY = y - targetPoint.Y;
+            int deltaX = x - targetPoint.X;
+            int deltaY = y - targetPoint.Y;
 
             jumpPoint = sourcePoint;
 
@@ -177,8 +177,8 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.JumpPoint
             if (deltaX != 0 && deltaY != 0)
             {
                 Point dummyPoint;
-                Boolean leftJump = TryJump(new Point(x + deltaX, y), sourcePoint, endPoint, stopFunction, out dummyPoint);
-                Boolean bottomJump = TryJump(new Point(x, y + deltaY), sourcePoint, endPoint, stopFunction, out dummyPoint);
+                bool leftJump = TryJump(new Point(x + deltaX, y), sourcePoint, endPoint, stopFunction, out dummyPoint);
+                bool bottomJump = TryJump(new Point(x, y + deltaY), sourcePoint, endPoint, stopFunction, out dummyPoint);
 
                 if (leftJump || bottomJump) 
                 {

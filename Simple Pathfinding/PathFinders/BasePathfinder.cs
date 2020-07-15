@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
+namespace SimplePathfinding.PathFinders
 {
     public abstract class BasePathfinder : IPathfinder
     {
         #region | Constants |
 
-        private const Int32 TooFewPoints = 3;
-        private const Int32 TooMuchPoints = 200;
-        private const Int32 OptimizationStep = 20;
+        private const int TooFewPoints = 3;
+        private const int TooMuchPoints = 200;
+        private const int OptimizationStep = 20;
 
         #endregion
 
@@ -21,11 +21,11 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// See <see cref="IPathfinder.TryFindPath"/> for more details.
         /// </summary>
-        protected abstract Boolean OnTryFindPath(Point startPoint, Point endPoint,
+        protected abstract bool OnTryFindPath(Point startPoint, Point endPoint,
                                                  StopFunction stopFunction,
                                                  out IReadOnlyCollection<Point> path,
                                                  out IReadOnlyCollection<Point> pivotPoints,
-                                                 Boolean optimize = true);
+                                                 bool optimize = true);
 
         /// <summary>
         /// Performs path optimization. This is only a stub, that passes original path (and pivot points).
@@ -54,7 +54,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
                 }
 
                 VisibilityOptimization(inputPath, stopFunction, out optimizedPath, out optimizedPivotPoints);
-                Int32 lastCount = 0;
+                int lastCount = 0;
 
                 while (optimizedPath.Count != lastCount)
                 {
@@ -88,8 +88,8 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
             List<Point> result = new List<Point>();
 
             // determines master point (one tested from), and last point (to detect cycle end)
-            Int32 masterIndex = 0;
-            Int32 lastIndex = inputPath.Count - 1;
+            int masterIndex = 0;
+            int lastIndex = inputPath.Count - 1;
             Point masterPoint = inputPath.ElementAt(masterIndex);
 
             // adds first point
@@ -98,9 +98,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
             do // performs optimization loop
             {
                 // starts at last points and work its way to the start point
-                for (Int32 index = Math.Min(OptimizationStep, lastIndex); index >= 0; index--)
+                for (int index = Math.Min(OptimizationStep, lastIndex); index >= 0; index--)
                 {
-                    Int32 referenceIndex = Math.Min(masterIndex + index, lastIndex);
+                    int referenceIndex = Math.Min(masterIndex + index, lastIndex);
                     Point referencePoint = inputPath.ElementAt(referenceIndex);
 
                     // if reference point is visible from master point (or next, which is assumed as visible) reference point becomes master
@@ -136,7 +136,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
             optimizedPivotPoints = prunedSectors;
         }
 
-        private static void OptimizeSegment(Int32 startIndex, Int32 endIndex, 
+        private static void OptimizeSegment(int startIndex, int endIndex, 
                                             StopFunction stopFunction, 
                                             IReadOnlyCollection<Point> inputPath, 
                                             ICollection<Point> result)
@@ -152,7 +152,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
             }
             else // otherwise subdivide segment in two, and process them
             {
-                Int32 halfIndex = startIndex + (endIndex - startIndex) / 2 + 1;
+                int halfIndex = startIndex + (endIndex - startIndex) / 2 + 1;
                 OptimizeSegment(startIndex, halfIndex - 1, stopFunction, inputPath, result);
                 OptimizeSegment(halfIndex, endIndex, stopFunction, inputPath, result);
             }
@@ -165,11 +165,11 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
         /// <summary>
         /// See <see cref="IPathfinder.TryFindPath"/> for more details.
         /// </summary>
-        public Boolean TryFindPath(Point startPoint, Point endPoint,
+        public bool TryFindPath(Point startPoint, Point endPoint,
                                    StopFunction stopFunction,
                                    out IReadOnlyCollection<Point> path, 
                                    out IReadOnlyCollection<Point> pivotPoints,
-                                   Boolean optimize = true)
+                                   bool optimize = true)
         {
             // creates obstacle function
             pivotPoints = null;
@@ -187,7 +187,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders
             }
 
             // finds the path (alternatively also optimizes/smooths it afterwards)
-            Boolean result = OnTryFindPath(startPoint, endPoint, stopFunction, out path, out pivotPoints, optimize);
+            bool result = OnTryFindPath(startPoint, endPoint, stopFunction, out path, out pivotPoints, optimize);
             if (result && optimize) OnOptimizePath(path, pivotPoints, stopFunction, out path, out pivotPoints);
             return result;
         }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Properties;
+using SimplePathfinding.Properties;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Specialized
+namespace SimplePathfinding.Scenarios.Specialized
 {
     public class ImageFileScenario : BasePathScenario
     {
@@ -19,7 +19,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Specialized
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public ImageFileScenario(Int32 width, Int32 height) : base(width, height)
+        public ImageFileScenario(int width, int height) : base(width, height)
         {
             cachedBitmap = new Bitmap(Resources.Maze);
         }
@@ -31,7 +31,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Specialized
         /// <summary>
         /// See <see cref="BasePathScenario.OnIsBlocked"/> for more details.
         /// </summary>
-        protected override Boolean OnIsBlocked(Int32 x, Int32 y)
+        protected override bool OnIsBlocked(int x, int y)
         {
             return cachedBitmap.GetPixel(x, y).ToArgb() == BlockColorValue;
         }
@@ -39,7 +39,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios.Specialized
         /// <summary>
         /// See <see cref="BasePathScenario.OnDraw"/> for more details.
         /// </summary>
-        protected override Bitmap OnCreateDefaultImage(Boolean generateNew, Boolean updateDistanceMap, Boolean showDistanceMap)
+        protected override Bitmap OnCreateDefaultImage(bool generateNew, bool updateDistanceMap, bool showDistanceMap)
         {
             Bitmap result = Resources.Maze;
 

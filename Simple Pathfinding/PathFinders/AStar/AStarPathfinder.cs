@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
+namespace SimplePathfinding.PathFinders.AStar
 {
     public class AStarPathfinder : BaseGraphSearchPathfinder<AStarNode, AStarMap>
     {
@@ -13,7 +13,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        public AStarPathfinder(Int32 width, Int32 height) : base(width, height) { }
+        public AStarPathfinder(int width, int height) : base(width, height) { }
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.AStar
         /// </summary>
         protected override void OnPerformAlgorithm(AStarNode currentNode, AStarNode neighborNode, Point neighborPoint, Point endPoint, StopFunction stopFunction)
         {
-            Int32 neighborScore = currentNode.Score + NeighborDistance(currentNode.Point, neighborPoint);
+            int neighborScore = currentNode.Score + NeighborDistance(currentNode.Point, neighborPoint);
 
             // opens node at this position
             if (neighborNode == null)

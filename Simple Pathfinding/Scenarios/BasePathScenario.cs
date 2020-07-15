@@ -5,30 +5,30 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
+using SimplePathfinding.Helpers;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
+namespace SimplePathfinding.Scenarios
 {
     public abstract class BasePathScenario : IPathScenario
     {
         #region | Constants |
 
-        protected readonly Int32 BlockColorValue = Color.Black.ToArgb();
+        protected readonly int BlockColorValue = Color.Black.ToArgb();
 
         #endregion
 
         #region | Fields |
 
-        protected Int32 Width;
-        protected Int32 Height;
+        protected int Width;
+        protected int Height;
 
         protected BitArray Cache;
-        protected UInt16[] DistanceMap;
+        protected ushort[] DistanceMap;
         protected List<DirectionType> Directions;
         
-        protected Boolean IsFirstRun;
+        protected bool IsFirstRun;
         protected BlockMethodType ObstacleDetectionMethod;
-        protected Boolean AreHollowAreasMinimized;
+        protected bool AreHollowAreasMinimized;
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// <summary>
         /// Determines whether the cache is used.
         /// </summary>
-        protected virtual Boolean UseCache
+        protected virtual bool UseCache
         {
             get { return false; }
         }
@@ -46,7 +46,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
 
         #region | Indexers |
 
-        public UInt16 this[Int32 x, Int32 y]
+        public ushort this[int x, int y]
         {
             get { return DistanceMap[x + y*Width]; }
             set { DistanceMap[x + y*Width] = value; }
@@ -61,16 +61,16 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// </summary>
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
-        protected BasePathScenario(Int32 width, Int32 height)
+        protected BasePathScenario(int width, int height)
         {
             Width = width;
             Height = height;
 
-            Int32 volume = Width*Height;
+            int volume = Width*Height;
 
             Directions = DirectionHelper.GetValues().ToList();
             Cache = UseCache ? new BitArray(volume) : null;
-            DistanceMap = new UInt16[volume];
+            DistanceMap = new ushort[volume];
 
             IsFirstRun = true;
             AreHollowAreasMinimized = true;
@@ -90,10 +90,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// <param name="updateDistanceMap">Whether to recreate the distance map.</param>
         /// <param name="showDistanceMap">Whether the distance map should be visualized in the target image.</param>
         public Bitmap CreateDefaultImage(BlockMethodType obstacleDetectionMethod = BlockMethodType.Precise,
-                                         Boolean generateNew = true, 
-                                         Boolean minimizeHollowAreas = false, 
-                                         Boolean updateDistanceMap = true,
-                                         Boolean showDistanceMap = true)
+                                         bool generateNew = true,
+                                         bool minimizeHollowAreas = false,
+                                         bool updateDistanceMap = true,
+                                         bool showDistanceMap = true)
         {
             ObstacleDetectionMethod = obstacleDetectionMethod;
             AreHollowAreasMinimized = minimizeHollowAreas;
@@ -112,20 +112,20 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
             Cache.SetAll(false);
         }
 
-        protected Int32 GetOffset(Int32 x, Int32 y)
+        protected int GetOffset(int x, int y)
         {
             return x + y*Width;
         }
 
-        protected Boolean GetCacheBit(Int32 x, Int32 y)
+        protected bool GetCacheBit(int x, int y)
         {
-            Int32 offset = GetOffset(x, y);
+            int offset = GetOffset(x, y);
             return Cache.Get(offset);
         }
 
-        protected void SetCacheBit(Int32 x, Int32 y)
+        protected void SetCacheBit(int x, int y)
         {
-            Int32 offset = GetOffset(x, y);
+            int offset = GetOffset(x, y);
             Cache.Set(offset, true);
         }
 
@@ -133,14 +133,14 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
 
         #region | Distance map methods |
 
-        private static void DrawDistanceIntensity(Bitmap bitmap, Int32 x, Int32 y, UInt16 distance)
+        private static void DrawDistanceIntensity(Bitmap bitmap, int x, int y, ushort distance)
         {
-            Int32 intensity = 255 - (distance << 1) % 254;
+            int intensity = 255 - (distance << 1) % 254;
             Color color = Color.FromArgb(255, 255, 255, intensity);
             bitmap.SetPixel(x, y, color);
         }
 
-        private void GenerateDistanceMap(Bitmap bitmap, Boolean showDistanceMap)
+        private void GenerateDistanceMap(Bitmap bitmap, bool showDistanceMap)
         {
             // cannot create map for invalid image, just skip it
             if (bitmap == null) return;
@@ -149,8 +149,8 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
             List<Point> nextRound = new List<Point>();
 
             // resets the distance map to Empty = 0, Blocked = 1
-            for (Int32 y = 0; y < Height; y++)
-            for (Int32 x = 0; x < Width; x++)
+            for (int y = 0; y < Height; y++)
+            for (int x = 0; x < Width; x++)
             {
                 Point point = new Point(x, y);
 
@@ -167,7 +167,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
             }
 
             // round to does actual classification
-            UInt16 round = 2;
+            ushort round = 2;
 
             do // perform rounds if there is still at least one pixel to process
             {
@@ -185,7 +185,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
                     if (neighborPoint.X >= 0 && neighborPoint.Y >= 0 &&
                         neighborPoint.X < Width && neighborPoint.Y < Height)
                     {
-                        UInt16 value = this[neighborPoint.X, neighborPoint.Y];
+                            ushort value = this[neighborPoint.X, neighborPoint.Y];
 
                         // if this neighbor is still unclassified, do it, and add it for the next round
                         if (value == 0)
@@ -206,7 +206,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
             while (nextRound.Count > 0);
         }
 
-        protected void UpdateDistanceMap(Bitmap bitmap, Boolean generateNew, Boolean updateDistanceMap, Boolean showDistanceMap)
+        protected void UpdateDistanceMap(Bitmap bitmap, bool generateNew, bool updateDistanceMap, bool showDistanceMap)
         {
             if (generateNew || updateDistanceMap || IsFirstRun)
             {
@@ -214,10 +214,10 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
             }
             else if (showDistanceMap) // if we're not showing the map just skip this at all, otherwise redraw it
             {
-                for (Int32 y = 0; y < Height; y++)
-                for (Int32 x = 0; x < Width; x++)
+                for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
                 {
-                    UInt16 distance = this[x, y];
+                        ushort distance = this[x, y];
 
                     // draw only non-blocking spaces
                     if (distance > 1)
@@ -236,9 +236,9 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// Called when a default image is about to be created.
         /// </summary>
         /// <returns></returns>
-        protected virtual Bitmap OnCreateDefaultImage(Boolean generateNew, 
-                                                      Boolean updateDistanceMap, 
-                                                      Boolean showDistanceMap)
+        protected virtual Bitmap OnCreateDefaultImage(bool generateNew,
+                                                      bool updateDistanceMap,
+                                                      bool showDistanceMap)
         {
             Bitmap result = new Bitmap(Width, Height, PixelFormat.Format32bppArgb);
 
@@ -269,7 +269,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// Called when a scenario is about to be built.
         /// </summary>
         /// <param name="generateNew">Indicates that a new configuration should be generated if possible.</param>
-        protected virtual void OnBuild(Boolean generateNew)
+        protected virtual void OnBuild(bool generateNew)
         {
             // not implemented here (empty scenario)
         }
@@ -290,7 +290,7 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns></returns>
-        protected abstract Boolean OnIsBlocked(Int32 x, Int32 y);
+        protected abstract bool OnIsBlocked(int x, int y);
 
         #endregion
 
@@ -299,18 +299,18 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// <summary>
         /// Conforms start and end point to the bounds of [0,0] - [width, height]
         /// </summary>
-        public static void CheckBounds(ref Point start, ref Point end, Int32 width, Int32 height)
+        public static void CheckBounds(ref Point start, ref Point end, int width, int height)
         {
-            Int32 x1 = Math.Max(0, Math.Min(width - 1, start.X));
-            Int32 y1 = Math.Max(0, Math.Min(height - 1, start.Y));
-            Int32 x2 = Math.Max(0, Math.Min(width - 1, end.X));
-            Int32 y2 = Math.Max(0, Math.Min(height - 1, end.Y));
+            int x1 = Math.Max(0, Math.Min(width - 1, start.X));
+            int y1 = Math.Max(0, Math.Min(height - 1, start.Y));
+            int x2 = Math.Max(0, Math.Min(width - 1, end.X));
+            int y2 = Math.Max(0, Math.Min(height - 1, end.Y));
 
             start = new Point(x1, y1);
             end = new Point(x2, y2);
         }
 
-        public static void ClearScreen(Graphics graphics, Int32 width, Int32 height)
+        public static void ClearScreen(Graphics graphics, int width, int height)
         {
             graphics.Clear(SystemColors.Control);
         }
@@ -322,18 +322,18 @@ namespace YinYang.CodeProject.Projects.SimplePathfinding.Scenarios
         /// <summary>
         /// See <see cref="IPathScenario.IsBlocked"/> for more details.
         /// </summary>
-        public Boolean IsBlocked(Int32 x, Int32 y, Int32 diameter)
+        public bool IsBlocked(int x, int y, int diameter)
         {
-            Boolean result = true;
+            bool result = true;
 
             // tests if the point is even within the bounds
             if (x >= 0 && y >= 0 && x < Width && y < Height)
             {
                 // retrieves distance (allowed radius) from the nearest obstacle; otherwise assume worst case scenario (1)
-                UInt16 radius = this[x, y];
-   
+                ushort radius = this[x, y];
+
                 // determines whether the object will fit
-                Boolean radiusCondition = radius <= (diameter + 1) >> 1;
+                bool radiusCondition = radius <= (diameter + 1) >> 1;
                 result = radiusCondition || OnIsBlocked(x, y);
             }
 

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Drawing;
-using YinYang.CodeProject.Projects.SimplePathfinding.Helpers;
-using YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.Common;
+using SimplePathfinding.Helpers;
+using SimplePathfinding.PathFinders.Common;
 
-namespace YinYang.CodeProject.Projects.SimplePathfinding.PathFinders.BreadthFirst
+namespace SimplePathfinding.PathFinders.BreadthFirst
 {
     public class BreadthFirstPathfinder : BaseGraphSearchPathfinder<SimpleNode, BreadthFirstMap>
     {
         #region | Constructors |
 
-        public BreadthFirstPathfinder(Int32 width, Int32 height) : base(width, height) { }
+        public BreadthFirstPathfinder(int width, int height) : base(width, height) { }
 
         #endregion
 

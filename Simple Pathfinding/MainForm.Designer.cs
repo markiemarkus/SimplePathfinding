@@ -1,4 +1,4 @@
-﻿namespace YinYang.CodeProject.Projects.SimplePathfinding
+﻿namespace SimplePathfinding
 {
     partial class MainForm
     {
